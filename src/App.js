@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Card from './components/Card/Card';
+import Select from './components/Select/Select';
+import getDogs from './Helpers/getDogs'
+
+const initialDog = {
+  image: "https://www.hola.com/imagenes/estar-bien/20190820147813/razas-perros-pequenos-parecen-grandes/0-711-550/razas-perro-pequenos-grandes-m.jpg",
+  breed: {
+    id: "1",
+    name: "Labrador"
+  }
+
+}
+
 
 function App() {
+
+  const updateDog = () => {
+    getDogs()
+    .then((newDog) => {
+      setDog(newDog)
+    })
+    
+  }
+
+
+  const [dog, setDog] = useState(initialDog)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app" >
+    <p>Soy una api dog</p>
+    <Select/>
+    <Card dog={dog}/>
+   
     </div>
   );
 }
