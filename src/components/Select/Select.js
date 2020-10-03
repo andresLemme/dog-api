@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getBreeds from '../../Helpers/getBreeds'
 
-const Select = () => {
+const Select = ({updateDog}) => {
   const initialBreeds = [
     {
       id: 1,
@@ -38,7 +38,7 @@ const Select = () => {
   }
 
   return (
-    <select>
+    <select onChange={(e) => updateDog(e.target.value)}>
       {breeds.map((breed) => {
         return (
           <option value={breed.id} key={breed.id}>

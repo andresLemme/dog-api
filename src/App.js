@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Card from './components/Card/Card';
 import Select from './components/Select/Select';
 import getDogs from './Helpers/getDogs'
@@ -15,10 +15,16 @@ const initialDog = {
 
 function App() {
 
-  const updateDog = () => {
-    getDogs()
+  useEffect(() =>{
+      updateDog(0)
+  }, [])
+
+
+  const updateDog = (breedid) => {
+    getDogs(breedid)
     .then((newDog) => {
       setDog(newDog)
+      // console.log(newDog)
     })
     
   }
@@ -28,7 +34,7 @@ function App() {
   return (
     <div className="app" >
     <p>Soy una api dog</p>
-    <Select/>
+    <Select updateDog={updateDog}/>
     <Card dog={dog}/>
    
     </div>
