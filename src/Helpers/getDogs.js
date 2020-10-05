@@ -1,15 +1,16 @@
 const getDogs = async (breedid) =>{
 
-   let url;
-
-  if (breedid === 0){
-
-     url = "https://api.thedogapi.com/v1/images/search";
-  } else{
-     url = "https://api.TheDogAPI.com/v1/images/search?breed_ids=" + breedid;
-  }
+   
+  const url = breedid === 0 || !breedid  ? "https://api.thedogapi.com/v1/images/search" : "https://api.TheDogAPI.com/v1/images/search?breed_ids=" + breedid;
 
   const res = await fetch(url);
+
+  if (!res.ok) {
+    const {status, url, statusText} = res;
+    throw Error (`Error: ${status} ${statusText} in fetch ${url}`)
+    
+  }
+
   const [data] = await res.json();
 
   const {url: image, breeds: [breed]} = data

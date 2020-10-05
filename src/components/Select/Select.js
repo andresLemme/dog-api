@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getBreeds from '../../Helpers/getBreeds'
+import Error from "../Error/Error";
 
 const Select = ({updateDog}) => {
   const initialBreeds = [
@@ -18,6 +19,7 @@ const Select = ({updateDog}) => {
   ];
 
   const [breeds, setBreeds] = useState(initialBreeds);
+  const [error, setError] = useState(null)
   
 
   useEffect(() =>{
@@ -33,12 +35,17 @@ const Select = ({updateDog}) => {
     .then((newBreeds) =>{ 
         setBreeds(newBreeds)
     })
+    .catch((error) => {
+      console.log(error)
+      setError("Error al cargar las razas")
+    })
     
 
   }
 
   return (
-    <select onChange={(e) => updateDog(e.target.value)}>
+    <>
+  <select onChange={(e) => updateDog(e.target.value)}>
       {breeds.map((breed) => {
         return (
           <option value={breed.id} key={breed.id}>
@@ -47,6 +54,9 @@ const Select = ({updateDog}) => {
         );
       })}
     </select>
+    {error && <Error error={error}/>}
+    </>
+    
   );
 };
 
